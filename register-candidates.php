@@ -76,7 +76,7 @@ require_once("db.php");
       <div class="container">
         <div class="row">
           <div class="col-12 text-center">
-            <h1 class="display-3 lh-sm mb-5">Create Company Profile</h1>
+            <h1 class="display-3 lh-sm mb-5">Create Company Profile 2</h1>
           </div>
         </div>
         <div class="row justify-content-center">
