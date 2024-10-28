@@ -2,9 +2,9 @@
 
 //Your Mysql Config
 $servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "jobportal";
+$username = "bdcodefo_bdcodefo";
+$password = "Q^(5Ei~@ZU?L";
+$dbname = "bdcodefo_jobportal";
 
 //Create New Database Connection
 $conn = new mysqli($servername, $username, $password, $dbname);
