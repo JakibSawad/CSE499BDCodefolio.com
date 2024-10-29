@@ -104,27 +104,27 @@ require_once("db.php");
     </nav>
 
 
-    <!-- ============================================-->
-    <!-- <section> begin ============================-->
-    <section class="mt-6">
-
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-md-9 col-lg-8 col-xl-5">
-            <h1 class="display-3 lh-sm">Landing Template for Startups</h1>
-          </div>
-          <div class="col-md-9 col-xl-5">
-            <p class="fs-2">Our landing page template works on all devices, and browsers, so you only have to set it up
-              once, and get beautiful results forever.</p>
-            <button class="btn btn-primary mt-3">Pricing and Plans</button>
-          </div>
+     <!-- ============================================-->
+  <!-- <section> begin ============================-->
+  <section class="mt-6">
+  
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-9 col-lg-8 col-xl-5">
+          <h1 class="display-3 lh-sm">Welcome to Our Job Portfolio Platform</h1>
+        </div>
+        <div class="col-md-9 col-xl-5">
+          <p class="fs-2">Discover job opportunities posted by top companies, and easily apply with a single click. Our platform is accessible on all devices and browsers for your convenience.</p>
+          <button class="btn btn-primary mt-3">Browse Jobs</button>
         </div>
       </div>
-      <!-- end of .container-->
+    </div>
+    <!-- end of .container-->
+  
+  </section>
+  <!-- <section> close ============================-->
+  <!-- ============================================-->
 
-    </section>
-    <!-- <section> close ============================-->
-    <!-- ============================================-->
 
 
 
@@ -174,248 +174,256 @@ require_once("db.php");
 
 
 
-    <!-- ============================================-->
-    <!-- <section> begin ============================-->
-    <section>
+   <!-- ============================================-->
+<!-- <section> begin ============================-->
+<section>
 
-      <div class="container">
-        <h1 class="display-6 fw-semi-bold"> Feature</h1>
-        <p class="fs-2">Our landing page template works on all devices, so you only have to set.</p>
-        <div class="row mb-4 mt-6">
-          <div class="col-md-6">
-            <div class="border rounded-1 border-700 h-100 features-items">
-              <div class="p-5"><img src="assets/img/gallery/dashboardicon.png" alt="Dashboard"
-                  style="width:48px;height:48px;" />
-                <h3 class="pt-3 lh-base">Dashboard</h3>
-                <p class="mb-0">A pseudo-Latin text used in web design, layout, and printing in place of things to
-                  emphasise layouts for previewing layouts and visual mockups.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="border rounded-1 border-700 h-100 features-items">
-              <div class="p-5"><img src="assets/img/gallery/comment.png" alt="Comment"
-                  style="width:48px;height:48px;" />
-                <h3 class="pt-3 lh-base">Comment</h3>
-                <p class="mb-0">A pseudo-Latin text used in web design, layout, and printing in place of things to
-                  emphasise layouts for previewing layouts and visual mockups.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row mb-4">
-          <div class="col-md-6">
-            <div class="border rounded-1 border-700 h-100 features-items">
-              <div class="p-5"><img src="assets/img/gallery/trilored.png" alt="Tailored"
-                  style="width:48px;height:48px;" />
-                <h3 class="pt-3 lh-base">Tailored</h3>
-                <p class="mb-0">A pseudo-Latin text used in web design, layout, and printing in place of things to
-                  emphasise layouts for previewing layouts and visual mockups.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="border rounded-1 border-700 h-100 features-items">
-              <div class="p-5"><img src="assets/img/gallery/statistics.png" alt="Statistic"
-                  style="width:48px;height:48px;" />
-                <h3 class="pt-3 lh-base">Statistic</h3>
-                <p class="mb-0">A pseudo-Latin text used in web design, layout, and printing in place of things to
-                  emphasise layouts for previewing layouts and visual mockups.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="border rounded-1 border-700 h-100 features-items">
-              <div class="p-5"><img src="assets/img/gallery/profile.png" alt="Profiles"
-                  style="width:48px;height:48px;" />
-                <h3 class="pt-3 lh-base">Profiles</h3>
-                <p class="mb-0">A pseudo-Latin text used in web design, layout, and printing in place of things to
-                  emphasise layouts for previewing layouts and visual mockups.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="border rounded-1 border-700 h-100 features-items">
-              <div class="p-5"><img src="assets/img/gallery/folder.png" alt="Folders" style="width:48px;height:48px;" />
-                <h3 class="pt-3 lh-base">Folders</h3>
-                <p class="mb-0">A pseudo-Latin text used in web design, layout, and printing in place of things to
-                  emphasise layouts for previewing layouts and visual mockups.</p>
-              </div>
-            </div>
+  <div class="container">
+    <h1 class="display-6 fw-semi-bold"> Features</h1>
+    <p class="fs-2">Explore the key features that make job searching and application management easy and efficient.</p>
+    
+    <div class="row mb-4 mt-6">
+      <div class="col-md-6">
+        <div class="border rounded-1 border-700 h-100 features-items">
+          <div class="p-5"><img src="assets/img/gallery/dashboardicon.png" alt="Dashboard"
+              style="width:48px;height:48px;" />
+            <h3 class="pt-3 lh-base">Company Dashboard</h3>
+            <p class="mb-0">A comprehensive dashboard where companies can post jobs, manage applications, and view candidate profiles.</p>
           </div>
         </div>
       </div>
-      <!-- end of .container-->
-
-    </section>
-    <!-- <section> close ============================-->
-    <!-- ============================================-->
-
-
-
-
-    <!-- ============================================-->
-    <!-- <section> begin ============================-->
-    <section class="mt-5">
-
-      <div class="container">
-        <div class="text-center">
-          <div class="p-5 bg-primary rounded-3">
-            <div class="py-3">
-              <h4 class="opacity-50 ls-2 lh-base fw-medium">READY TO START</h4>
-              <h2 class="mt-3 fs-4 fs-sm-7 latter-sp-3 lh-base fw-semi-bold">Start Your Free Trail Today </h2>
-            </div>
-            <div class="flex-center d-flex">
-              <button class="btn btn-info">Get Started <span class="fas fa-arrow-right"></span></button>
-            </div>
+      <div class="col-md-6">
+        <div class="border rounded-1 border-700 h-100 features-items">
+          <div class="p-5"><img src="assets/img/gallery/comment.png" alt="Comment"
+              style="width:48px;height:48px;" />
+            <h3 class="pt-3 lh-base">Application Feedback</h3>
+            <p class="mb-0">An interactive area for companies to provide feedback and comments on applications, helping candidates improve.</p>
           </div>
         </div>
       </div>
-      <!-- end of .container-->
+    </div>
 
-    </section>
-    <!-- <section> close ============================-->
-    <!-- ============================================-->
-
-
-
-
-    <!-- ============================================-->
-    <!-- <section> begin ============================-->
-    <section class="mt-5">
-
-      <div class="container">
-        <div class="text-center">
-          <p class="fs-2 ls-2">SAFLOW</p>
-          <h1 class="display-6 fw-semi-bold">How does it work?</h1>
-        </div>
-        <div class="row mt-6 flex-center justify-content-xl-evenly px-xl-5">
-          <div class="col-md-7 col-lg-6 order-md-1"><img class="w-100" src="assets/img/gallery/comment1.png"
-              alt="..." /></div>
-          <div class="col-md-5 col-lg-4">
-            <h3 class="fs-xl-7 fs-lg-4 fs-md-3 mt-5 mt-md-0">How does it work?</h3>
-            <p class="fs-xl-1 ls-3 pe-xl-2"> Our landing page template works on all devices, so you only have to set it
-              up once, and get beautiful results.</p>
-          </div>
-        </div>
-        <div class="row mt-6 flex-center justify-content-xl-evenly px-xl-5">
-          <div class="col-md-7 col-lg-6 false"><img class="w-100" src="assets/img/gallery/comment2.png" alt="..." />
-          </div>
-          <div class="col-md-5 col-lg-4">
-            <h3 class="fs-xl-7 fs-lg-4 fs-md-3 mt-5 mt-md-0">How does it work?</h3>
-            <p class="fs-xl-1 ls-3 pe-xl-2"> Our landing page template works on all devices, so you only have to set it
-              up once, and get beautiful results.</p>
-          </div>
-        </div>
-        <div class="row mt-6 flex-center justify-content-xl-evenly px-xl-5">
-          <div class="col-md-7 col-lg-6 order-md-1"><img class="w-100" src="assets/img/gallery/comment3.png"
-              alt="..." /></div>
-          <div class="col-md-5 col-lg-4">
-            <h3 class="fs-xl-7 fs-lg-4 fs-md-3 mt-5 mt-md-0">How does it work?</h3>
-            <p class="fs-xl-1 ls-3 pe-xl-2"> Our landing page template works on all devices, so you only have to set it
-              up once, and get beautiful results.</p>
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <div class="border rounded-1 border-700 h-100 features-items">
+          <div class="p-5"><img src="assets/img/gallery/trilored.png" alt="Tailored"
+              style="width:48px;height:48px;" />
+            <h3 class="pt-3 lh-base">Personalized Job Matches</h3>
+            <p class="mb-0">Receive tailored job recommendations based on your profile and preferences to streamline your job search.</p>
           </div>
         </div>
       </div>
-      <!-- end of .container-->
+      <div class="col-md-6">
+        <div class="border rounded-1 border-700 h-100 features-items">
+          <div class="p-5"><img src="assets/img/gallery/statistics.png" alt="Statistic"
+              style="width:48px;height:48px;" />
+            <h3 class="pt-3 lh-base">Application Statistics</h3>
+            <p class="mb-0">Access insights and statistics on your application status, interview invitations, and more.</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    </section>
-    <!-- <section> close ============================-->
-    <!-- ============================================-->
+    <div class="row">
+      <div class="col-md-6">
+        <div class="border rounded-1 border-700 h-100 features-items">
+          <div class="p-5"><img src="assets/img/gallery/profile.png" alt="Profiles"
+              style="width:48px;height:48px;" />
+            <h3 class="pt-3 lh-base">User Profiles</h3>
+            <p class="mb-0">Create a detailed profile to showcase your skills, experience, and qualifications to prospective employers.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="border rounded-1 border-700 h-100 features-items">
+          <div class="p-5"><img src="assets/img/gallery/folder.png" alt="Folders" style="width:48px;height:48px;" />
+            <h3 class="pt-3 lh-base">Application Management</h3>
+            <p class="mb-0">Organize and track your job applications in one place, making it easier to manage multiple applications.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end of .container-->
+
+</section>
+<!-- <section> close ============================-->
+<!-- ============================================-->
+
+
+
+
+<!-- ============================================-->
+<!-- <section> begin ============================-->
+<section class="mt-5">
+
+  <div class="container">
+    <div class="text-center">
+      <div class="p-5 bg-primary rounded-3">
+        <div class="py-3">
+          <h4 class="opacity-50 ls-2 lh-base fw-medium">READY TO START YOUR JOB SEARCH?</h4>
+          <h2 class="mt-3 fs-4 fs-sm-7 latter-sp-3 lh-base fw-semi-bold">Create Your Free Profile Today</h2>
+        </div>
+        <div class="flex-center d-flex">
+          <button class="btn btn-info">Get Started <span class="fas fa-arrow-right"></span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end of .container-->
+
+</section>
+<!-- <section> close ============================-->
+<!-- ============================================-->
+
+
+
+
+
+   <!-- ============================================-->
+<!-- <section> begin ============================-->
+<section class="mt-5">
+
+  <div class="container">
+    <div class="text-center">
+      <p class="fs-2 ls-2">SAFLOW</p>
+      <h1 class="display-6 fw-semi-bold">How Does It Work?</h1>
+    </div>
+
+    <!-- Step 1: Create a Profile -->
+    <div class="row mt-6 flex-center justify-content-xl-evenly px-xl-5">
+      <div class="col-md-7 col-lg-6 order-md-1">
+        <img class="w-100" src="assets/img/gallery/comment1.png" alt="Profile Setup" />
+      </div>
+      <div class="col-md-5 col-lg-4">
+        <h3 class="fs-xl-7 fs-lg-4 fs-md-3 mt-5 mt-md-0">Step 1: Create Your Profile</h3>
+        <p class="fs-xl-1 ls-3 pe-xl-2">Sign up and create a profile to showcase your skills, experience, and career interests to potential employers.</p>
+      </div>
+    </div>
+
+    <!-- Step 2: Browse Job Listings -->
+    <div class="row mt-6 flex-center justify-content-xl-evenly px-xl-5">
+      <div class="col-md-7 col-lg-6">
+        <img class="w-100" src="assets/img/gallery/comment2.png" alt="Browse Jobs" />
+      </div>
+      <div class="col-md-5 col-lg-4">
+        <h3 class="fs-xl-7 fs-lg-4 fs-md-3 mt-5 mt-md-0">Step 2: Browse Job Listings</h3>
+        <p class="fs-xl-1 ls-3 pe-xl-2">Explore job openings posted by top companies and find positions that match your skills and career goals.</p>
+      </div>
+    </div>
+
+    <!-- Step 3: Apply and Track Applications -->
+    <div class="row mt-6 flex-center justify-content-xl-evenly px-xl-5">
+      <div class="col-md-7 col-lg-6 order-md-1">
+        <img class="w-100" src="assets/img/gallery/comment3.png" alt="Apply and Track" />
+      </div>
+      <div class="col-md-5 col-lg-4">
+        <h3 class="fs-xl-7 fs-lg-4 fs-md-3 mt-5 mt-md-0">Step 3: Apply and Track Applications</h3>
+        <p class="fs-xl-1 ls-3 pe-xl-2">Submit your applications with ease and track the status of each one, from submission to interview.</p>
+      </div>
+    </div>
+
+  </div>
+  <!-- end of .container-->
+
+</section>
+<!-- <section> close ============================-->
+<!-- ============================================-->
 
 
             
 
     <!-- ============================================-->
-    <!-- <section> begin ============================-->
-    <section>
+<!-- <section> begin ============================-->
+<section>
 
-      <div class="container-lg">
-        <div class="text-center">
-          <p class="fs-2 ls-2">SAFLOW</p>
-          <h1 class="display-6 fw-semi-bold">Pricing</h1>
-        </div>
-        <div class="row flex-center">
-          <div class="col-sm-9 col-md-4 mt-3">
-            <div class="py-5 px-4 px-md-3 px-lg-4 rounded-1 bg-800 plans-cards mt-md-9">
-              <p class="fs-2 ls-2">FREE</p>
-              <h1 class="display-4 ls-3"><span class="text-600">$</span>0</h1>
-              <hr class="hr mt-6 text-1000" />
-              <ul class="mt-5 ps-0">
-                <li class="pricing-lists"><i class="fas fa-check-circle fa-lg me-2 text-600"></i>7,000,000+ Events</li>
-                <li class="pricing-lists"><i class="fas fa-check-circle fa-lg me-2 text-600"></i>4 Custom Domains</li>
-                <li class="pricing-lists"><i class="fas fa-check-circle fa-lg me-2 text-600"></i>Dedicated Support </li>
-                <li class="pricing-lists"><i class="fas fa-check-circle fa-lg me-2 text-600"></i>12 Months History</li>
-                <li class="pricing-lists"><i class="fas fa-check-circle fa-lg me-2 text-600"></i>1 Dedicated SSL</li>
-              </ul>
-              <button class="btn btn-gray mt-4">Get Started <span class="fas fa-arrow-right"></span></button>
-            </div>
-          </div>
-          <div class="col-sm-9 col-md-4 mt-3">
-            <div class="py-5 px-4 px-md-3 px-lg-4 rounded-1 bg-800 plans-cards mt-0">
-              <p class="fs-2 ls-2">BASIC</p>
-              <h1 class="display-4 ls-3"><span class="text-600">$</span>23</h1>
-              <hr class="hr mt-6 text-1000" />
-              <ul class="mt-5 ps-0">
-                <li class="pricing-lists"><i class="fas fa-check-circle fa-lg me-2 text-600"></i>7,000,000+ Events</li>
-                <li class="pricing-lists"><i class="fas fa-check-circle fa-lg me-2 text-600"></i>4 Custom Domains</li>
-                <li class="pricing-lists"><i class="fas fa-check-circle fa-lg me-2 text-600"></i>Dedicated Support </li>
-                <li class="pricing-lists"><i class="fas fa-check-circle fa-lg me-2 text-600"></i>12 Months History</li>
-                <li class="pricing-lists"><i class="fas fa-check-circle fa-lg me-2 text-600"></i>1 Dedicated SSL</li>
-              </ul>
-              <button class="btn btn-gray mt-4">Get Started <span class="fas fa-arrow-right"></span></button>
-            </div>
-          </div>
-          <div class="col-sm-9 col-md-4 mt-3">
-            <div class="py-5 px-4 px-md-3 px-lg-4 rounded-1 bg-800 plans-cards mt-md-9">
-              <p class="fs-2 ls-2">PREMIUM</p>
-              <h1 class="display-4 ls-3"><span class="text-600">$</span>59</h1>
-              <hr class="hr mt-6 text-1000" />
-              <ul class="mt-5 ps-0">
-                <li class="pricing-lists"><i class="fas fa-check-circle fa-lg me-2 text-600"></i>7,000,000+ Events</li>
-                <li class="pricing-lists"><i class="fas fa-check-circle fa-lg me-2 text-600"></i>4 Custom Domains</li>
-                <li class="pricing-lists"><i class="fas fa-check-circle fa-lg me-2 text-600"></i>Dedicated Support </li>
-                <li class="pricing-lists"><i class="fas fa-check-circle fa-lg me-2 text-600"></i>12 Months History</li>
-                <li class="pricing-lists"><i class="fas fa-check-circle fa-lg me-2 text-600"></i>1 Dedicated SSL</li>
-              </ul>
-              <button class="btn btn-gray mt-4">Get Started <span class="fas fa-arrow-right"></span></button>
-            </div>
-          </div>
+  <div class="container-lg">
+    <div class="text-center">
+      <p class="fs-2 ls-2">SAFLOW</p>
+      <h1 class="display-6 fw-semi-bold">Pricing Plans for Companies</h1>
+    </div>
+    <div class="row flex-center">
+      
+      <!-- Free Plan -->
+      <div class="col-sm-9 col-md-4 mt-3">
+        <div class="py-5 px-4 px-md-3 px-lg-4 rounded-1 bg-800 plans-cards mt-md-9">
+          <p class="fs-2 ls-2">FREE</p>
+          <h1 class="display-4 ls-3"><span class="text-600">$</span>0</h1>
+          <hr class="hr mt-6 text-1000" />
+          <ul class="mt-5 ps-0">
+            <li class="pricing-lists"><i class="fas fa-check-circle fa-lg me-2 text-600"></i>1 Job Posting</li>
+            <li class="pricing-lists"><i class="fas fa-check-circle fa-lg me-2 text-600"></i>Basic Candidate Search</li>
+            <li class="pricing-lists"><i class="fas fa-check-circle fa-lg me-2 text-600"></i>Email Support</li>
+          </ul>
+          <button class="btn btn-gray mt-4">Get Started <span class="fas fa-arrow-right"></span></button>
         </div>
       </div>
-      <!-- end of .container-->
-
-    </section>
-    <!-- <section> close ============================-->
-    <!-- ============================================-->
-
-
-
-
-    <!-- ============================================-->
-    <!-- <section> begin ============================-->
-    <section>
-
-      <div class="container">
-        <div class="text-center text-xl-start">
-          <div class="p-5 bg-primary rounded-3 d-flex flex-column justify-content-xl-between flex-xl-row">
-            <div class="py-3">
-              <h4 class="opacity-50 ls-2 lh-base fw-medium">READY TO START</h4>
-              <h2 class="mt-3 fs-4 fs-sm-7 latter-sp-3 lh-base fw-semi-bold">Start Your Free Trail Today </h2>
-            </div>
-            <div class="flex-center d-flex">
-              <button class="btn btn-info">Get Started <span class="fas fa-arrow-right"></span></button>
-            </div>
-          </div>
+      
+      <!-- Basic Plan -->
+      <div class="col-sm-9 col-md-4 mt-3">
+        <div class="py-5 px-4 px-md-3 px-lg-4 rounded-1 bg-800 plans-cards mt-0">
+          <p class="fs-2 ls-2">BASIC</p>
+          <h1 class="display-4 ls-3"><span class="text-600">$</span>23</h1>
+          <hr class="hr mt-6 text-1000" />
+          <ul class="mt-5 ps-0">
+            <li class="pricing-lists"><i class="fas fa-check-circle fa-lg me-2 text-600"></i>Up to 5 Job Postings</li>
+            <li class="pricing-lists"><i class="fas fa-check-circle fa-lg me-2 text-600"></i>Enhanced Candidate Search</li>
+            <li class="pricing-lists"><i class="fas fa-check-circle fa-lg me-2 text-600"></i>Priority Email Support</li>
+            <li class="pricing-lists"><i class="fas fa-check-circle fa-lg me-2 text-600"></i>Applicant Tracking</li>
+          </ul>
+          <button class="btn btn-gray mt-4">Get Started <span class="fas fa-arrow-right"></span></button>
         </div>
       </div>
-      <!-- end of .container-->
+      
+      <!-- Premium Plan -->
+      <div class="col-sm-9 col-md-4 mt-3">
+        <div class="py-5 px-4 px-md-3 px-lg-4 rounded-1 bg-800 plans-cards mt-md-9">
+          <p class="fs-2 ls-2">PREMIUM</p>
+          <h1 class="display-4 ls-3"><span class="text-600">$</span>59</h1>
+          <hr class="hr mt-6 text-1000" />
+          <ul class="mt-5 ps-0">
+            <li class="pricing-lists"><i class="fas fa-check-circle fa-lg me-2 text-600"></i>Unlimited Job Postings</li>
+            <li class="pricing-lists"><i class="fas fa-check-circle fa-lg me-2 text-600"></i>Advanced Candidate Search</li>
+            <li class="pricing-lists"><i class="fas fa-check-circle fa-lg me-2 text-600"></i>24/7 Dedicated Support</li>
+            <li class="pricing-lists"><i class="fas fa-check-circle fa-lg me-2 text-600"></i>Applicant Tracking & Analytics</li>
+          </ul>
+          <button class="btn btn-gray mt-4">Get Started <span class="fas fa-arrow-right"></span></button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <!-- end of .container-->
 
-    </section>
-    <!-- <section> close ============================-->
-    <!-- ============================================-->
+</section>
+<!-- <section> close ============================-->
+<!-- ============================================-->
+
+
+
+<!-- ============================================-->
+<!-- <section> begin ============================-->
+<section>
+
+  <div class="container">
+    <div class="text-center text-xl-start">
+      <div class="p-5 bg-primary rounded-3 d-flex flex-column justify-content-xl-between flex-xl-row">
+        <div class="py-3">
+          <h4 class="opacity-50 ls-2 lh-base fw-medium">JOIN US TODAY</h4>
+          <h2 class="mt-3 fs-4 fs-sm-7 latter-sp-3 lh-base fw-semi-bold">Create a Company Profile and Post Your First Job</h2>
+        </div>
+        <div class="flex-center d-flex">
+          <button class="btn btn-info">Sign Up Now <span class="fas fa-arrow-right"></span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end of .container-->
+
+</section>
+<!-- <section> close ============================-->
+<!-- ============================================-->
+
 
 
 
