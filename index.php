@@ -111,7 +111,7 @@ require_once("db.php");
     <div class="container">
       <div class="row align-items-center">
         <div class="col-md-9 col-lg-8 col-xl-5">
-          <h1 class="display-3 lh-sm">Welcome to Our Job Portfolio Platform</h1>
+          <h1 class="display-3 lh-sm">Welcome to Our Job and Portfolio Platform</h1>
         </div>
         <div class="col-md-9 col-xl-5">
           <p class="fs-2">Discover job opportunities posted by top companies, and easily apply with a single click. Our platform is accessible on all devices and browsers for your convenience.</p>
