@@ -4,10 +4,37 @@ session_start();
 
 //Including Database Connection From db.php file to avoid rewriting in all files
 require_once("db.php");
+
+// Sanitize and validate pagination limit
+$limit = filter_var(4, FILTER_VALIDATE_INT, [
+    'options' => [
+        'min_range' => 1, 
+        'max_range' => 20 // Prevent excessive pagination
+    ]
+]) ?: 4;
+
+// Prepare and execute count query with improved security
+try {
+    $countStmt = $conn->prepare("SELECT COUNT(id_jobpost) AS total_jobs FROM job_post");
+    $countStmt->execute();
+    $countResult = $countStmt->get_result();
+    
+    if($countResult->num_rows > 0) {
+        $row = $countResult->fetch_assoc();
+        $total_records = $row['total_jobs'];
+        $total_pages = ceil($total_records / $limit);
+    } else {
+        $total_pages = 1;
+    }
+    $countStmt->close();
+} catch(Exception $e) {
+    // Log error
+    error_log("Error counting job posts: " . $e->getMessage());
+    $total_pages = 1;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en-US" dir="ltr">
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -57,26 +84,30 @@ require_once("db.php");
             <div class="col">
               <a href="jobs.php" class="btn btn-primary" role="button">Jobs</a>
             </div>
-            <?php if(empty($_SESSION['id_user']) && empty($_SESSION['id_company'])) { ?>
+            <?php 
+            // Improve session validation
+            $isLoggedIn = isset($_SESSION['id_user']) || isset($_SESSION['id_company']);
+            
+            if (!$isLoggedIn) { ?>
             <div class="col">
               <a href="login.php" class="btn btn-secondary" role="button">Login</a>
             </div>
             <div class="col">
               <a href="sign-up.php" class="btn btn-secondary" role="button">SignUp</a>
             </div>
-            <?php } else { 
-              if(isset($_SESSION['id_user'])) { ?>
-            <div class="col">
-              <a href="user/index.php" class="btn btn-secondary" role="button">Dashboard</a>
-            </div>
-            <?php } else if(isset($_SESSION['id_company'])) { ?> 
-            <div class="col">
-              <a href="company/index.php" class="btn btn-secondary" role="button">Dashboard</a>
-            </div>
-            <?php } ?>
-            <div class="col">
-              <a href="logout.php" class="btn btn-secondary" role="button">Logout</a>
-            </div>
+            <?php } else { ?>
+              <?php if(isset($_SESSION['id_user'])) { ?>
+                <div class="col">
+                  <a href="user/index.php" class="btn btn-secondary" role="button">Dashboard</a>
+                </div>
+              <?php } else if(isset($_SESSION['id_company'])) { ?> 
+                <div class="col">
+                  <a href="company/index.php" class="btn btn-secondary" role="button">Dashboard</a>
+                </div>
+              <?php } ?>
+              <div class="col">
+                <a href="logout.php" class="btn btn-secondary" role="button">Logout</a>
+              </div>
             <?php } ?>
           </div>
         </div>
@@ -90,7 +121,7 @@ require_once("db.php");
           <div class="col-md-12 latest-job margin-top-50 margin-bottom-20">
             <h1 class="text-center display-6 fw-semi-bold">Latest Jobs</h1>  
             <div class="input-group input-group-lg">
-              <input type="text" id="searchBar" class="form-control" placeholder="Search job">
+              <input type="text" id="searchBar" class="form-control" placeholder="Search job" maxlength="100">
               <span class="input-group-btn">
                 <button id="searchBtn" type="button" class="btn btn-primary btn-flat">Search</button>
               </span>
@@ -132,25 +163,8 @@ require_once("db.php");
             </div>
           </div>
           <div class="col-md-9">
-            <?php
-            $limit = 4;
-
-            $sql = "SELECT COUNT(id_jobpost) AS id FROM job_post";
-            $result = $conn->query($sql);
-            if($result->num_rows > 0)
-            {
-              $row = $result->fetch_assoc();
-              $total_records = $row['id'];
-              $total_pages = ceil($total_records / $limit);
-            } else {
-              $total_pages = 1;
-            }
-            ?>
-            
-            <div id="target-content" >
-              
-            </div>
-            <div class="text-center" >
+            <div id="target-content"></div>
+            <div class="text-center">
               <ul class="pagination text-center" id="pagination"></ul>
             </div> 
           </div>
@@ -200,11 +214,11 @@ require_once("db.php");
   function Pagination() {
     $("#pagination").twbsPagination({
       totalPages: <?php echo $total_pages; ?>,
-      visible: 5,
+      visiblePages: 5,
       onPageClick: function (e, page) {
         e.preventDefault();
-        $("#target-content").html("loading....");
-        $("#target-content").load("jobpagination.php?page="+page);
+        $("#target-content").html("<div class='text-center'><i class='fa fa-spinner fa-spin fa-3x'></i></div>");
+        $("#target-content").load("jobpagination.php?page=" + page);
       }
     });
   }
@@ -215,9 +229,9 @@ require_once("db.php");
 
   $("#searchBtn").on("click", function(e) {
     e.preventDefault();
-    var searchResult = $("#searchBar").val();
+    var searchResult = $("#searchBar").val().trim();
     var filter = "searchBar";
-    if(searchResult != "") {
+    if(searchResult !== "") {
       $("#pagination").twbsPagination('destroy');
       Search(searchResult, filter);
     } else {
@@ -230,36 +244,26 @@ require_once("db.php");
     e.preventDefault();
     var searchResult = $(this).data("target");
     var filter = "experience";
-    if(searchResult != "") {
-      $("#pagination").twbsPagination('destroy');
-      Search(searchResult, filter);
-    } else {
-      $("#pagination").twbsPagination('destroy');
-      Pagination();
-    }
+    $("#pagination").twbsPagination('destroy');
+    Search(searchResult, filter);
   });
 
   $(".citySearch").on("click", function(e) {
     e.preventDefault();
     var searchResult = $(this).data("target");
     var filter = "city";
-    if(searchResult != "") {
-      $("#pagination").twbsPagination('destroy');
-      Search(searchResult, filter);
-    } else {
-      $("#pagination").twbsPagination('destroy');
-      Pagination();
-    }
+    $("#pagination").twbsPagination('destroy');
+    Search(searchResult, filter);
   });
 
   function Search(val, filter) {
     $("#pagination").twbsPagination({
       totalPages: <?php echo $total_pages; ?>,
-      visible: 5,
+      visiblePages: 5,
       onPageClick: function (e, page) {
         e.preventDefault();
         val = encodeURIComponent(val);
-        $("#target-content").html("loading....");
+        $("#target-content").html("<div class='text-center'><i class='fa fa-spinner fa-spin fa-3x'></i></div>");
         $("#target-content").load("search.php?page="+page+"&search="+val+"&filter="+filter);
       }
     });
