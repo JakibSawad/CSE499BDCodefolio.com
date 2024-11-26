@@ -132,27 +132,21 @@ require_once("db.php");
             </div>
           </div>
           <div class="col-md-9">
-                          <?php
-              $limit = 4;
-              
-              $sql = "SELECT COUNT(id_jobpost) AS id FROM job_post";
-              $result = $conn->query($sql);
-              
-              if ($result) {
-                  if ($result->num_rows > 0) {
-                      $row = $result->fetch_assoc();
-                      $total_records = $row['id'];
-                      $total_pages = ceil($total_records / $limit);
-                  } else {
-                      $total_pages = 1;
-                  }
-                  $result->free(); // Free the result set
-              } else {
-                  // Query failed
-                  echo "Error: " . $conn->error;
-                  $total_pages = 1;
-              }
-              ?>            
+            <?php
+            $limit = 4;
+
+            $sql = "SELECT COUNT(id_jobpost) AS id FROM job_post";
+            $result = $conn->query($sql);
+            if($result->num_rows > 0)
+            {
+              $row = $result->fetch_assoc();
+              $total_records = $row['id'];
+              $total_pages = ceil($total_records / $limit);
+            } else {
+              $total_pages = 1;
+            }
+            ?>
+            
             <div id="target-content" >
               
             </div>
