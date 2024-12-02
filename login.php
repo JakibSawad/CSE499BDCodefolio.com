@@ -110,7 +110,7 @@ if(isset($_SESSION['id_user']) || isset($_SESSION['id_company'])) {
       </div>
     </section>
 
-    <!-- Footer -->
+       <!-- Footer -->
     <section class="bg-secondary mt-6">
       <div class="container">
         <div class="row">
@@ -133,6 +133,7 @@ if(isset($_SESSION['id_user']) || isset($_SESSION['id_company'])) {
       </div>
     </section>
   </main>
+
 
   <!-- JavaScripts -->
   <script src="vendors/@popperjs/popper.min.js"></script>
