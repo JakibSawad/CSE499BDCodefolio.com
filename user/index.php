@@ -15,7 +15,7 @@ require_once("../db.php");
 
 <head>
     <meta charset="utf-8">
-    <title>DarkPan - User Dashboard</title>
+    <title>User Dashboard</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -35,7 +35,7 @@ require_once("../db.php");
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Template Stylesheet -->
+    <!-- Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
 </head>
 
@@ -217,7 +217,7 @@ require_once("../db.php");
                             &copy; <a href="#">Job Portal</a>, All Rights Reserved. 
                         </div>
                         <div class="col-12 col-sm-6 text-center text-sm-end">
-                            Designed By <a href="#">Hisenberg gropu</a>
+                            Designed By <a href="#">Heisenberg group</a>
                             <br>Distributed By: <a href="#">NSU CSE</a>
                         </div>
                     </div>
