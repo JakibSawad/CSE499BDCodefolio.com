@@ -159,28 +159,29 @@ require_once("db.php");
     </section>
   </main>
 
-  <!-- Footer -->
-  <section class="bg-secondary">
-    <div class="container">
-      <div class="row">
-        <div class="col-xl-3 text-center text-xl-start">
-          <a href="#!"><img class="footer-img me-xl-5 me-3" src="assets/img/gallery/facebook-line1.svg" alt="fb" style="width:20px;height:20px;" /></a>
-          <a href="#!"><img class="footer-img me-xl-5 me-3" src="assets/img/gallery/linkedin-line1.svg" alt="in" style="width:20px;height:20px;" /></a>
-          <a href="#!"><img class="footer-img me-xl-5 me-3" src="assets/img/gallery/twitter-line1.svg" alt="twitter" style="width:20px;height:20px;" /></a>
-          <a href="#!"><img class="footer-img me-xl-5 me-3" src="assets/img/gallery/instagram-line1.svg" alt="instagram" style="width:20px;height:20px;" /></a>
-        </div>
-        <div class="col-xl-4 pt-2 pt-xl-0">
-          <p class="mb-0 text-center text-xl-end">
-            <a class="text-300 text-decoration-none footer-link" href="#">Terms &amp; condition</a>
-            <a class="text-300 text-decoration-none footer-link ps-4" href="#">Privacy Policy</a>
-          </p>
-        </div>
-        <div class="col-xl-5 pt-2 pt-xl-0 text-center text-xl-end">
-          <p class="mb-0">&copy; This template is made with ❤️ by <a class="text-300" href="https://themewagon.com/" target="_blank">ThemeWagon</a></p>
+     <!-- Footer -->
+    <section class="bg-secondary mt-6">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-3 text-center text-xl-start">
+            <a href="#!"><img class="footer-img me-xl-5 me-3" src="assets/img/gallery/facebook-line1.svg" alt="fb" style="width:20px;height:20px;" /></a>
+            <a href="#!"><img class="footer-img me-xl-5 me-3" src="assets/img/gallery/linkedin-line1.svg" alt="in" style="width:20px;height:20px;" /></a>
+            <a href="#!"><img class="footer-img me-xl-5 me-3" src="assets/img/gallery/twitter-line1.svg" alt="twitter" style="width:20px;height:20px;" /></a>
+            <a href="#!"><img class="footer-img me-xl-5 me-3" src="assets/img/gallery/instagram-line1.svg" alt="instagram" style="width:20px;height:20px;" /></a>
+          </div>
+          <div class="col-xl-4 pt-2 pt-xl-0">
+            <p class="mb-0 text-center text-xl-end">
+              <a class="text-300 text-decoration-none footer-link" href="#!">Terms &amp; Conditions</a>
+              <a class="text-300 text-decoration-none footer-link ps-4" href="#!">Privacy Policy</a>
+            </p>
+          </div>
+          <div class="col-xl-5 pt-2 pt-xl-0 text-center text-xl-end">
+            <p class="mb-0">&copy; 2024 Job Portal. All rights reserved.</p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+
 
   <!-- JavaScripts -->
   <script src="vendors/@popperjs/popper.min.js"></script>
