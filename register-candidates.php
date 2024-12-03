@@ -1,4 +1,4 @@
-<?php
+<?php 
 session_start();
 
 if(isset($_SESSION['id_user']) || isset($_SESSION['id_company'])) { 
@@ -16,7 +16,7 @@ require_once("db.php");
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Job Portal || Create Company Profile</title>
+  <title>Job Portal || Create User Profile</title>
 
   <!-- Favicons -->
   <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicons/favicon.png">
@@ -76,81 +76,88 @@ require_once("db.php");
       <div class="container">
         <div class="row">
           <div class="col-12 text-center">
-            <h1 class="display-3 lh-sm mb-5">Create Company Profile</h1>
+            <h1 class="display-3 lh-sm mb-5">Create Your Profile</h1>
           </div>
         </div>
         <div class="row justify-content-center">
           <div class="col-12">
             <div class="card rounded-3 p-4">
               <div class="card-body">
-                <form method="post" id="registerCompanies" action="addcompany.php" enctype="multipart/form-data">
+                <form method="post" id="registerCandidates" action="adduser.php" enctype="multipart/form-data">
                   <div class="row">
-                    <!-- Left Column -->
-                    <div class="col-md-6">
+                    <!-- Personal Information -->
+                    <div class="col-md-4">
+                      <h3 class="text-center mb-4">Personal Details</h3>
                       <div class="form-group mb-3">
-                        <input class="form-control form-control-lg" type="text" name="name" placeholder="Full Name *" required>
+                        <input class="form-control form-control-lg" type="text" id="fname" name="fname" placeholder="First Name *" required>
                       </div>
                       <div class="form-group mb-3">
-                        <input class="form-control form-control-lg" type="text" name="companyname" placeholder="Company Name *" required>
+                        <input class="form-control form-control-lg" type="text" id="lname" name="lname" placeholder="Last Name *" required>
                       </div>
                       <div class="form-group mb-3">
-                        <input class="form-control form-control-lg" type="text" name="website" placeholder="Website">
+                        <input class="form-control form-control-lg" type="text" id="email" name="email" placeholder="Email *" required>
                       </div>
                       <div class="form-group mb-3">
-                        <input class="form-control form-control-lg" type="text" name="email" placeholder="Email *" required>
+                        <textarea class="form-control form-control-lg" rows="4" id="aboutme" name="aboutme" placeholder="Brief intro about yourself *" required></textarea>
                       </div>
                       <div class="form-group mb-3">
-                        <textarea class="form-control form-control-lg" rows="4" name="aboutme" placeholder="Brief info about your company *" required></textarea>
+                        <label>Date Of Birth</label>
+                        <input class="form-control form-control-lg" type="date" id="dob" min="1960-01-01" max="1999-01-31" name="dob" placeholder="Date Of Birth">
+                      </div>
+                      <div class="form-group mb-3">
+                        <input class="form-control form-control-lg" type="text" id="age" name="age" placeholder="Age" readonly>
                       </div>
                     </div>
 
-                    <!-- Right Column -->
-                    <div class="col-md-6">
+                    <!-- Professional Information -->
+                    <div class="col-md-4">
+                      <h3 class="text-center mb-4">Professional Details</h3>
                       <div class="form-group mb-3">
-                        <input class="form-control form-control-lg" type="password" name="password" id="password" placeholder="Password *" required>
+                        <input class="form-control form-control-lg" type="date" id="passingyear" name="passingyear" placeholder="Passing Year">
+                        <small class="form-text text-muted">Year of Graduation</small>
                       </div>
                       <div class="form-group mb-3">
-                        <input class="form-control form-control-lg" type="password" name="cpassword" id="cpassword" placeholder="Confirm Password *" required>
+                        <input class="form-control form-control-lg" type="text" id="qualification" name="qualification" placeholder="Highest Qualification">
+                      </div>
+                      <div class="form-group mb-3">
+                        <input class="form-control form-control-lg" type="text" id="stream" name="stream" placeholder="Stream">
+                      </div>
+                      <div class="form-group mb-3">
+                        <textarea class="form-control form-control-lg" rows="4" id="skills" name="skills" placeholder="Enter Skills"></textarea>
+                      </div>
+                      <div class="form-group mb-3">
+                        <input class="form-control form-control-lg" type="text" id="designation" name="designation" placeholder="Designation">
+                      </div>
+                      <div class="form-group mb-3">
+                        <label class="form-label">Resume (PDF Only) *</label>
+                        <input type="file" name="resume" class="form-control form-control-lg" required>
+                      </div>
+                    </div>
+
+                    <!-- Account & Contact Information -->
+                    <div class="col-md-4">
+                      <h3 class="text-center mb-4">Account Details</h3>
+                      <div class="form-group mb-3">
+                        <input class="form-control form-control-lg" type="password" id="password" name="password" placeholder="Password *" required>
+                      </div>
+                      <div class="form-group mb-3">
+                        <input class="form-control form-control-lg" type="password" id="cpassword" name="cpassword" placeholder="Confirm Password *" required>
                       </div>
                       <div id="passwordError" class="alert alert-danger d-none">
                         Password Mismatch!!
                       </div>
                       <div class="form-group mb-3">
-                        <input class="form-control form-control-lg" type="text" name="contactno" placeholder="Phone Number *" minlength="10" maxlength="10" onkeypress="return validatePhone(event);" required>
+                        <input class="form-control form-control-lg" type="text" id="contactno" name="contactno" minlength="10" maxlength="10" onkeypress="return validatePhone(event);" placeholder="Phone Number">
                       </div>
                       <div class="form-group mb-3">
-                        <select class="form-control form-control-lg" id="country" name="country" required>
-                          <option selected="" value="">Select Country *</option>
-                          <?php
-                            $sql="SELECT * FROM countries";
-                            $result=$conn->query($sql);
-
-                            if($result->num_rows > 0) {
-                              while($row = $result->fetch_assoc()) {
-                                echo "<option value='".$row['name']."' data-id='".$row['id']."'>".$row['name']."</option>";
-                              }
-                            }
-                          ?>
-                        </select>
-                      </div>
-                      <div id="stateDiv" class="form-group mb-3" style="display: none;">
-                        <select class="form-control form-control-lg" id="state" name="state" required>
-                          <option value="" selected="">Select State *</option>
-                        </select>
-                      </div>
-                      <div id="cityDiv" class="form-group mb-3" style="display: none;">
-                        <select class="form-control form-control-lg" id="city" name="city" required>
-                          <option selected="">Select City *</option>
-                        </select>
+                        <textarea class="form-control form-control-lg" rows="4" id="address" name="address" placeholder="Address"></textarea>
                       </div>
                       <div class="form-group mb-3">
-                        <label class="form-label">Company Logo *</label>
-                        <input type="file" name="image" class="form-control form-control-lg" required>
+                        <input class="form-control form-control-lg" type="text" id="city" name="city" placeholder="City">
                       </div>
-                    </div>
-
-                    <!-- Footer Elements -->
-                    <div class="col-12">
+                      <div class="form-group mb-3">
+                        <input class="form-control form-control-lg" type="text" id="state" name="state" placeholder="State">
+                      </div>
                       <div class="form-group mb-3">
                         <div class="form-check">
                           <input class="form-check-input" type="checkbox" required>
@@ -159,21 +166,32 @@ require_once("db.php");
                           </label>
                         </div>
                       </div>
-                      <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-lg">Register Company</button>
+                      <div class="form-group text-center">
+                        <button type="submit" class="btn btn-primary btn-lg">Register</button>
                       </div>
+                    </div>
+                  </div>
 
-                      <?php if(isset($_SESSION['registerError'])) { ?>
-                        <div class="alert alert-danger mt-3">
+                  <!-- Error Messages -->
+                  <div class="row mt-3">
+                    <div class="col-12">
+                      <?php 
+                      if(isset($_SESSION['registerError'])) { ?>
+                        <div class="alert alert-danger text-center">
                           Email Already Exists! Choose A Different Email!
                         </div>
-                      <?php unset($_SESSION['registerError']); } ?>
+                      <?php 
+                        unset($_SESSION['registerError']); 
+                      } ?>
 
-                      <?php if(isset($_SESSION['uploadError'])) { ?>
-                        <div class="alert alert-danger mt-3">
+                      <?php 
+                      if(isset($_SESSION['uploadError'])) { ?>
+                        <div class="alert alert-danger text-center">
                           <?php echo $_SESSION['uploadError']; ?>
                         </div>
-                      <?php unset($_SESSION['uploadError']); } ?>
+                      <?php 
+                        unset($_SESSION['uploadError']); 
+                      } ?>
                     </div>
                   </div>
                 </form>
@@ -229,40 +247,28 @@ require_once("db.php");
       return true;
     }
 
-    $("#country").on("change", function() {
-      var id = $(this).find(':selected').attr("data-id");
-      $("#state").find('option:not(:first)').remove();
-      if(id != '') {
-        $.post("state.php", {id: id}).done(function(data) {
-          $("#state").append(data);
-        });
-        $('#stateDiv').show();
-      } else {
-        $('#stateDiv').hide();
-        $('#cityDiv').hide();
-      }
-    });
+    $(document).ready(function() {
+      $('#dob').on('change', function() {
+        var today = new Date();
+        var birthDate = new Date($(this).val());
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var m = today.getMonth() - birthDate.getMonth();
 
-    $("#state").on("change", function() {
-      var id = $(this).find(':selected').attr("data-id");
-      $("#city").find('option:not(:first)').remove();
-      if(id != '') {
-        $.post("city.php", {id: id}).done(function(data) {
-          $("#city").append(data);
-        });
-        $('#cityDiv').show();
-      } else {
-        $('#cityDiv').hide();
-      }
-    });
+        if(m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
 
-    $("#registerCompanies").on("submit", function(e) {
-      e.preventDefault();
-      if($('#password').val() != $('#cpassword').val()) {
-        $('#passwordError').removeClass('d-none');
-      } else {
-        $(this).unbind('submit').submit();
-      }
+        $('#age').val(age);
+      });
+
+      $("#registerCandidates").on("submit", function(e) {
+        e.preventDefault();
+        if($('#password').val() != $('#cpassword').val()) {
+          $('#passwordError').removeClass('d-none');
+        } else {
+          $(this).unbind('submit').submit();
+        }
+      });
     });
   </script>
 
