@@ -85,10 +85,9 @@ if(isset($_SESSION['id_admin'])) {
                 </div>
             </div>
         </div>
-     
         <!-- Sign In End -->
     </div>
-   
+
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -100,7 +99,7 @@ if(isset($_SESSION['id_admin'])) {
     <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-    <!-- Javascript -->
+    <!-- Template Javascript -->
     <script src="js/main.js"></script>
 </body>
 </html>
