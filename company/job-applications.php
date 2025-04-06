@@ -15,7 +15,7 @@ require_once("../db.php");
 
 <head>
     <meta charset="utf-8">
-    <title>DarkPan - Company Dashboard</title>
+    <title>DarkPan - Job Applications</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -66,11 +66,11 @@ require_once("../db.php");
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="index.php" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="index.php" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <a href="edit-company.php" class="nav-item nav-link"><i class="fa fa-building me-2"></i>My Company</a>
                     <a href="create-job-post.php" class="nav-item nav-link"><i class="fa fa-file-plus me-2"></i>Create Job Post</a>
                     <a href="my-job-post.php" class="nav-item nav-link"><i class="fa fa-file-alt me-2"></i>My Job Posts</a>
-                    <a href="job-applications.php" class="nav-item nav-link"><i class="fa fa-users me-2"></i>Job Applications</a>
+                    <a href="job-applications.php" class="nav-item nav-link active"><i class="fa fa-users me-2"></i>Job Applications</a>
                     <a href="mailbox.php" class="nav-item nav-link"><i class="fa fa-envelope me-2"></i>Mailbox</a>
                     <a href="settings.php" class="nav-item nav-link"><i class="fa fa-cog me-2"></i>Settings</a>
                     <a href="resume-database.php" class="nav-item nav-link"><i class="fa fa-database me-2"></i>Resume Database</a>
@@ -118,49 +118,62 @@ require_once("../db.php");
             </nav>
             <!-- Navbar End -->
 
-            <!-- Overview Alert Start -->
+            <!-- Recent Applications Start -->
             <div class="container-fluid pt-4 px-4">
-                <div class="alert alert-primary alert-dismissible fade show" role="alert">
-                    <i class="fa fa-info-circle me-2"></i>In this dashboard you are able to change your account settings, post and manage your jobs. Got a question? Do not hesitate to drop us a mail.
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            </div>
-            <!-- Overview Alert End -->
+                <div class="bg-secondary text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h3 class="mb-0">Recent Applications</h3>
+                    </div>
+                    <div class="table-responsive">
+                        <?php
+                        $sql = "SELECT * FROM job_post INNER JOIN apply_job_post ON job_post.id_jobpost=apply_job_post.id_jobpost INNER JOIN users ON users.id_user=apply_job_post.id_user WHERE apply_job_post.id_company='$_SESSION[id_company]'";
+                        $result = $conn->query($sql);
 
-            <!-- Statistics Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-                    <div class="col-sm-6">
-                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-line fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Jobs Posted</p>
+                        if($result->num_rows > 0) {
+                        ?>
+                        <table class="table text-start align-middle table-bordered table-hover mb-0">
+                            <thead>
+                                <tr class="text-white">
+                                    <th scope="col">Job Title / Applicant</th>
+                                    <th scope="col">Date Applied</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                                 <?php
-                                $sql = "SELECT * FROM job_post WHERE id_company='$_SESSION[id_company]'";
-                                $result = $conn->query($sql);
-                                $total = $result->num_rows > 0 ? $result->num_rows : 0;
+                                while($row = $result->fetch_assoc()) {
                                 ?>
-                                <h6 class="mb-0"><?php echo $total; ?></h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-bar fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Applications Received</p>
+                                <tr>
+                                    <td><?php echo $row['jobtitle'].' @ ('.$row['firstname'].' '.$row['lastname'].')'; ?></td>
+                                    <td><?php echo $row['createdat']; ?></td>
+                                    <td>
+                                        <?php 
+                                        if($row['status'] == 0) {
+                                            echo '<span class="badge bg-warning">Pending</span>';
+                                        } else if ($row['status'] == 1) {
+                                            echo '<span class="badge bg-danger">Rejected</span>';
+                                        } else if ($row['status'] == 2) {
+                                            echo '<span class="badge bg-success">Under Review</span>';
+                                        }
+                                        ?>
+                                    </td>
+                                    <td><a class="btn btn-sm btn-primary" href="user-application.php?id=<?php echo $row['id_user']; ?>&id_jobpost=<?php echo $row['id_jobpost']; ?>">View Details</a></td>
+                                </tr>
                                 <?php
-                                $sql = "SELECT * FROM apply_job_post WHERE id_company='$_SESSION[id_company]'";
-                                $result = $conn->query($sql);
-                                $total = $result->num_rows > 0 ? $result->num_rows : 0;
+                                }
                                 ?>
-                                <h6 class="mb-0"><?php echo $total; ?></h6>
-                            </div>
-                        </div>
+                            </tbody>
+                        </table>
+                        <?php
+                        } else {
+                            echo "<div class='text-center'><p class='text-white'>No applications found.</p></div>";
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
-            <!-- Statistics End -->
+            <!-- Recent Applications End -->
 
             <!-- Footer Start -->
             <div class="container-fluid pt-4 px-4">
@@ -170,7 +183,7 @@ require_once("../db.php");
                             &copy; <a href="#">Job Portal</a>, All Rights Reserved. 
                         </div>
                         <div class="col-12 col-sm-6 text-center text-sm-end">
-                            Designed By <a href="#">Hisenberg gropu</a>
+                            Designed By <a href="#">Hisenberg group</a>
                             <br>Distributed By: <a href="#">NSU CSE</a>
                         </div>
                     </div>

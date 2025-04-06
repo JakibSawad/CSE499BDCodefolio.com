@@ -15,7 +15,7 @@ require_once("../db.php");
 
 <head>
     <meta charset="utf-8">
-    <title>DarkPan - Company Dashboard</title>
+    <title>Job Portal - Mailbox</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -31,6 +31,10 @@ require_once("../db.php");
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -66,12 +70,12 @@ require_once("../db.php");
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="index.php" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="index.php" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <a href="edit-company.php" class="nav-item nav-link"><i class="fa fa-building me-2"></i>My Company</a>
-                    <a href="create-job-post.php" class="nav-item nav-link"><i class="fa fa-file-plus me-2"></i>Create Job Post</a>
-                    <a href="my-job-post.php" class="nav-item nav-link"><i class="fa fa-file-alt me-2"></i>My Job Posts</a>
+                    <a href="create-job-post.php" class="nav-item nav-link"><i class="fa fa-file-alt me-2"></i>Create Job Post</a>
+                    <a href="my-job-post.php" class="nav-item nav-link"><i class="fa fa-clipboard-list me-2"></i>My Job Posts</a>
                     <a href="job-applications.php" class="nav-item nav-link"><i class="fa fa-users me-2"></i>Job Applications</a>
-                    <a href="mailbox.php" class="nav-item nav-link"><i class="fa fa-envelope me-2"></i>Mailbox</a>
+                    <a href="mailbox.php" class="nav-item nav-link active"><i class="fa fa-envelope me-2"></i>Mailbox</a>
                     <a href="settings.php" class="nav-item nav-link"><i class="fa fa-cog me-2"></i>Settings</a>
                     <a href="resume-database.php" class="nav-item nav-link"><i class="fa fa-database me-2"></i>Resume Database</a>
                     <a href="../logout.php" class="nav-item nav-link"><i class="fa fa-sign-out-alt me-2"></i>Logout</a>
@@ -118,49 +122,42 @@ require_once("../db.php");
             </nav>
             <!-- Navbar End -->
 
-            <!-- Overview Alert Start -->
+            <!-- Mailbox Start -->
             <div class="container-fluid pt-4 px-4">
-                <div class="alert alert-primary alert-dismissible fade show" role="alert">
-                    <i class="fa fa-info-circle me-2"></i>In this dashboard you are able to change your account settings, post and manage your jobs. Got a question? Do not hesitate to drop us a mail.
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            </div>
-            <!-- Overview Alert End -->
-
-            <!-- Statistics Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-                    <div class="col-sm-6">
-                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-line fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Jobs Posted</p>
-                                <?php
-                                $sql = "SELECT * FROM job_post WHERE id_company='$_SESSION[id_company]'";
-                                $result = $conn->query($sql);
-                                $total = $result->num_rows > 0 ? $result->num_rows : 0;
-                                ?>
-                                <h6 class="mb-0"><?php echo $total; ?></h6>
-                            </div>
-                        </div>
+                <div class="bg-secondary rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Mailbox</h6>
+                        <a href="create-mail.php" class="btn btn-primary"><i class="fas fa-envelope me-2"></i>Create New</a>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-bar fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Applications Received</p>
+                    <div class="table-responsive">
+                        <table class="table text-start align-middle table-bordered table-hover mb-0" id="mailboxTable">
+                            <thead>
+                                <tr class="text-white">
+                                    <th scope="col">Subject</th>
+                                    <th scope="col">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                                 <?php
-                                $sql = "SELECT * FROM apply_job_post WHERE id_company='$_SESSION[id_company]'";
+                                $sql = "SELECT * FROM mailbox WHERE id_fromuser='$_SESSION[id_company]' OR id_touser='$_SESSION[id_company]'";
                                 $result = $conn->query($sql);
-                                $total = $result->num_rows > 0 ? $result->num_rows : 0;
+                                if($result->num_rows > 0) {
+                                    while($row = $result->fetch_assoc()) {
                                 ?>
-                                <h6 class="mb-0"><?php echo $total; ?></h6>
-                            </div>
-                        </div>
+                                <tr>
+                                    <td><a href="read-mail.php?id_mail=<?php echo $row['id_mailbox']; ?>" class="text-light"><?php echo $row['subject']; ?></a></td>
+                                    <td><?php echo date("d-M-Y h:i a", strtotime($row['createdAt'])); ?></td>
+                                </tr>
+                                <?php
+                                    }
+                                }
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-            <!-- Statistics End -->
+            <!-- Mailbox End -->
 
             <!-- Footer Start -->
             <div class="container-fluid pt-4 px-4">
@@ -170,8 +167,7 @@ require_once("../db.php");
                             &copy; <a href="#">Job Portal</a>, All Rights Reserved. 
                         </div>
                         <div class="col-12 col-sm-6 text-center text-sm-end">
-                            Designed By <a href="#">Hisenberg gropu</a>
-                            <br>Distributed By: <a href="#">NSU CSE</a>
+                            Designed By <a href="#">Your Company</a>
                         </div>
                     </div>
                 </div>
@@ -194,9 +190,23 @@ require_once("../db.php");
     <script src="lib/tempusdominus/js/moment.min.js"></script>
     <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    
+    <script>
+    $(function () {
+        $('#mailboxTable').DataTable({
+            'paging': true,
+            'lengthChange': false,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false
+        });
+    });
+    </script>
 </body>
 
 </html>

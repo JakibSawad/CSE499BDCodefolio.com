@@ -1,4 +1,5 @@
 <?php
+
 //To Handle Session Variables on This Page
 session_start();
 
@@ -9,13 +10,43 @@ if(empty($_SESSION['id_company'])) {
 }
 
 require_once("../db.php");
+
+$sql = "SELECT * FROM mailbox WHERE id_mailbox='$_GET[id_mail]' AND (id_fromuser='$_SESSION[id_company]' OR id_touser='$_SESSION[id_company]')";
+$result = $conn->query($sql);
+if($result->num_rows > 0) {
+  $row = $result->fetch_assoc();
+  if($row['fromuser'] == "company") {
+    $sql1 = "SELECT * FROM company WHERE id_company='$row[id_fromuser]'";
+    $result1 = $conn->query($sql1);
+    if($result1->num_rows > 0) {
+      $rowCompany = $result1->fetch_assoc();
+    }
+    $sql2 = "SELECT * FROM users WHERE id_user='$row[id_touser]'";
+    $result2 = $conn->query($sql2);
+    if($result2->num_rows > 0) {
+      $rowUser = $result2->fetch_assoc();
+    }
+  } else {
+    $sql1 = "SELECT * FROM company WHERE id_company='$row[id_touser]'";
+    $result1 = $conn->query($sql1);
+    if($result1->num_rows > 0) {
+      $rowCompany = $result1->fetch_assoc();
+    }
+    $sql2 = "SELECT * FROM users WHERE id_user='$row[id_fromuser]'";
+    $result2 = $conn->query($sql2);
+    if($result2->num_rows > 0) {
+      $rowUser = $result2->fetch_assoc();
+    }
+  }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
-    <title>DarkPan - Company Dashboard</title>
+    <title>Job Portal - Read Mail</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -32,11 +63,19 @@ require_once("../db.php");
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    
+    <!-- TinyMCE -->
+    <script src="../js/tinymce/tinymce.min.js"></script>
+    <script>tinymce.init({ selector:'#description', height: 150 });</script>
 </head>
 
 <body>
@@ -66,12 +105,12 @@ require_once("../db.php");
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="index.php" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="index.php" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <a href="edit-company.php" class="nav-item nav-link"><i class="fa fa-building me-2"></i>My Company</a>
-                    <a href="create-job-post.php" class="nav-item nav-link"><i class="fa fa-file-plus me-2"></i>Create Job Post</a>
-                    <a href="my-job-post.php" class="nav-item nav-link"><i class="fa fa-file-alt me-2"></i>My Job Posts</a>
-                    <a href="job-applications.php" class="nav-item nav-link"><i class="fa fa-users me-2"></i>Job Applications</a>
-                    <a href="mailbox.php" class="nav-item nav-link"><i class="fa fa-envelope me-2"></i>Mailbox</a>
+                    <a href="create-job-post.php" class="nav-item nav-link"><i class="fa fa-file-alt me-2"></i>Create Job</a>
+                    <a href="my-job-post.php" class="nav-item nav-link"><i class="fa fa-briefcase me-2"></i>My Jobs</a>
+                    <a href="job-applications.php" class="nav-item nav-link"><i class="fa fa-user-check me-2"></i>Applications</a>
+                    <a href="mailbox.php" class="nav-item nav-link active"><i class="fa fa-envelope me-2"></i>Mailbox</a>
                     <a href="settings.php" class="nav-item nav-link"><i class="fa fa-cog me-2"></i>Settings</a>
                     <a href="resume-database.php" class="nav-item nav-link"><i class="fa fa-database me-2"></i>Resume Database</a>
                     <a href="../logout.php" class="nav-item nav-link"><i class="fa fa-sign-out-alt me-2"></i>Logout</a>
@@ -109,8 +148,8 @@ require_once("../db.php");
                             <span class="d-none d-lg-inline-flex"><?php echo $_SESSION['name']; ?></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">My Profile</a>
-                            <a href="#" class="dropdown-item">Settings</a>
+                            <a href="edit-company.php" class="dropdown-item">My Profile</a>
+                            <a href="settings.php" class="dropdown-item">Settings</a>
                             <a href="../logout.php" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
@@ -118,49 +157,80 @@ require_once("../db.php");
             </nav>
             <!-- Navbar End -->
 
-            <!-- Overview Alert Start -->
+            <!-- Read Mail Start -->
             <div class="container-fluid pt-4 px-4">
-                <div class="alert alert-primary alert-dismissible fade show" role="alert">
-                    <i class="fa fa-info-circle me-2"></i>In this dashboard you are able to change your account settings, post and manage your jobs. Got a question? Do not hesitate to drop us a mail.
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            </div>
-            <!-- Overview Alert End -->
-
-            <!-- Statistics Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-                    <div class="col-sm-6">
-                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-line fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Jobs Posted</p>
-                                <?php
-                                $sql = "SELECT * FROM job_post WHERE id_company='$_SESSION[id_company]'";
-                                $result = $conn->query($sql);
-                                $total = $result->num_rows > 0 ? $result->num_rows : 0;
-                                ?>
-                                <h6 class="mb-0"><?php echo $total; ?></h6>
-                            </div>
+                <div class="bg-secondary rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Message Details</h6>
+                        <a href="mailbox.php" class="btn btn-primary"><i class="fas fa-arrow-left me-2"></i>Back to Mailbox</a>
+                    </div>
+                    
+                    <!-- Message Box -->
+                    <div class="bg-dark rounded p-4 mb-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <h5 class="text-light"><?php echo $row['subject']; ?></h5>
+                            <span class="text-light"><?php echo date("d-M-Y h:i a", strtotime($row['createdAt'])); ?></span>
+                        </div>
+                        <p class="mb-2 text-light">From: 
+                            <strong>
+                                <?php if($row['fromuser'] == "company") { 
+                                    echo $rowCompany['companyname']; 
+                                } else { 
+                                    echo $rowUser['firstname']; 
+                                } ?>
+                            </strong>
+                        </p>
+                        <hr class="bg-light">
+                        <div class="text-light">
+                            <?php echo stripcslashes($row['message']); ?>
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-bar fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Applications Received</p>
-                                <?php
-                                $sql = "SELECT * FROM apply_job_post WHERE id_company='$_SESSION[id_company]'";
-                                $result = $conn->query($sql);
-                                $total = $result->num_rows > 0 ? $result->num_rows : 0;
-                                ?>
-                                <h6 class="mb-0"><?php echo $total; ?></h6>
-                            </div>
+                    
+                    <!-- Reply Messages -->
+                    <?php
+                    $sqlReply = "SELECT * FROM reply_mailbox WHERE id_mailbox='$_GET[id_mail]'";
+                    $resultReply = $conn->query($sqlReply);
+                    if($resultReply->num_rows > 0) {
+                        while($rowReply = $resultReply->fetch_assoc()) {
+                    ?>
+                    <div class="bg-dark rounded p-4 mb-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <h5 class="text-light">Reply Message</h5>
+                            <span class="text-light"><?php echo date("d-M-Y h:i a", strtotime($rowReply['createdAt'])); ?></span>
                         </div>
+                        <p class="mb-2 text-light">From: 
+                            <strong>
+                                <?php if($rowReply['usertype'] == "company") { 
+                                    echo $rowCompany['companyname']; 
+                                } else { 
+                                    echo $rowUser['firstname']; 
+                                } ?>
+                            </strong>
+                        </p>
+                        <hr class="bg-light">
+                        <div class="text-light">
+                            <?php echo stripcslashes($rowReply['message']); ?>
+                        </div>
+                    </div>
+                    <?php
+                        }
+                    }
+                    ?>
+                    
+                    <!-- Reply Form -->
+                    <div class="bg-dark rounded p-4">
+                        <h5 class="text-light mb-4">Send Reply</h5>
+                        <form action="reply-mailbox.php" method="post">
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control bg-dark border-0 text-light" id="description" name="description" style="height: 150px"></textarea>
+                                <input type="hidden" name="id_mail" value="<?php echo $_GET['id_mail']; ?>">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Reply</button>
+                        </form>
                     </div>
                 </div>
             </div>
-            <!-- Statistics End -->
+            <!-- Read Mail End -->
 
             <!-- Footer Start -->
             <div class="container-fluid pt-4 px-4">
@@ -170,8 +240,7 @@ require_once("../db.php");
                             &copy; <a href="#">Job Portal</a>, All Rights Reserved. 
                         </div>
                         <div class="col-12 col-sm-6 text-center text-sm-end">
-                            Designed By <a href="#">Hisenberg gropu</a>
-                            <br>Distributed By: <a href="#">NSU CSE</a>
+                            Designed By <a href="#">Your Company</a>
                         </div>
                     </div>
                 </div>
@@ -194,6 +263,7 @@ require_once("../db.php");
     <script src="lib/tempusdominus/js/moment.min.js"></script>
     <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
