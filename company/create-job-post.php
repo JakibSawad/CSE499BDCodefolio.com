@@ -171,8 +171,8 @@ require_once("../db.php");
                             © <a href="#">Job Portal</a>, All Rights Reserved.
                         </div>
                         <div class="col-12 col-sm-6 text-center text-sm-end">
-                            Designed By <a href="https://htmlcodex.com">HTML Codex</a>
-                            <br>Distributed By: <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                            Designed By <a href="#">Hisenberg group</a>
+                            <br>Distributed By: <a href="#">NSU CSE</a>
                         </div>
                     </div>
                 </div>
