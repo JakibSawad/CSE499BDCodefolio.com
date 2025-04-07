@@ -164,7 +164,7 @@ require_once("../db.php");
                             &copy; <a href="#">Job Portal</a>, All Rights Reserved. 
                         </div>
                         <div class="col-12 col-sm-6 text-center text-sm-end">
-                            Designed By <a href="#">Your Company</a>
+                            Designed By <a href="#">Heisenberg Group</a>
                         </div>
                     </div>
                 </div>
