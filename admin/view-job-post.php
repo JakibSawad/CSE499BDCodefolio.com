@@ -1,5 +1,4 @@
 <?php
-
 //To Handle Session Variables on This Page
 session_start();
 
@@ -8,136 +7,164 @@ if(empty($_SESSION['id_admin'])) {
   exit();
 }
 
-
 //Including Database Connection From db.php file to avoid rewriting in all files
 require_once("../db.php");
 
-
-  
 $sql1 = "SELECT * FROM job_post INNER JOIN company ON job_post.id_company=company.id_company WHERE id_jobpost='$_GET[id]'";
 $result1 = $conn->query($sql1);
 if($result1->num_rows > 0) 
 {
   $row = $result1->fetch_assoc();
 }
-
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Job Portal</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../css/AdminLTE.min.css">
-  <link rel="stylesheet" href="../css/_all-skins.min.css">
-  <!-- Custom -->
-  <link rel="stylesheet" href="../css/custom.css">
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
+    <meta charset="utf-8">
+    <title>Job Portal - Job Details</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <!-- Google Font -->
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-</head>
-<body class="hold-transition skin-green sidebar-mini">
-<div class="wrapper">
-
-  <header class="main-header">
-
-    <!-- Logo -->
-    <a href="index.php" class="logo logo-bg">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>J</b>P</span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Job</b> Portal</span>
-    </a>
-
-    <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top">
-      <!-- Navbar Right Menu -->
-      <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">
-                  
-        </ul>
-      </div>
-    </nav>
-  </header>
-
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper" style="margin-left: 0px;">
-
-    <section id="candidates" class="content-header">
-      <div class="container">
-        <div class="row">          
-          <div class="col-md-9 bg-white padding-2">
-            <div class="pull-left">
-              <h2><b><i><?php echo $row['jobtitle']; ?></i></b></h2>
-            </div>
-            <div class="pull-right">
-              <a href="active-jobs.php" class="btn btn-default btn-lg btn-flat margin-top-20"><i class="fa fa-arrow-circle-left"></i> Back</a>
-            </div>
-            <div class="clearfix"></div>
-            <hr>
-            <div>
-              <p><span class="margin-right-10"><i class="fa fa-location-arrow text-green"></i> <?php echo $row['city']; ?></span> <i class="fa fa-calendar text-green"></i> <?php echo date("d-M-Y", strtotime($row['createdat'])); ?></p>              
-            </div>
-            <div>
-              <?php echo stripcslashes($row['description']); ?>
-            </div>
-            
-            
-          </div>
-          <div class="col-md-3">
-            <div class="thumbnail">
-              <img src="../uploads/logo/<?php echo $row['logo']; ?>" alt="companylogo">
-              <div class="caption text-center">
-                <h3><?php echo $row['companyname']; ?></h3>
-                <hr>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet"> 
     
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-  </div>
-  <!-- /.content-wrapper -->
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
 
-  <footer class="main-footer" style="margin-left: 0px;">
-    <div class="text-center">
-      <strong>Copyright &copy; 2016-2017 <a href="learningfromscratch.online">Job Portal</a>.</strong> All rights
-    reserved.
+<body>
+    <div class="container-fluid position-relative d-flex p-0">
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+        <!-- Sidebar Start -->
+        <div class="sidebar pe-4 pb-3">
+            <nav class="navbar bg-secondary navbar-dark">
+                <a href="index.php" class="navbar-brand mx-4 mb-3">
+                    <h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>Job Portal</h3>
+                </a>
+                <div class="d-flex align-items-center ms-4 mb-4">
+                    <div class="position-relative">
+                        <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                    </div>
+                    <div class="ms-3">
+                        <h6 class="mb-0">Welcome Admin</h6>
+                        <span>Administrator</span>
+                    </div>
+                </div>
+                <div class="navbar-nav w-100">
+                    <a href="dashboard.php" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="active-jobs.php" class="nav-item nav-link active"><i class="fa fa-briefcase me-2"></i>Active Jobs</a>
+                    <a href="applications.php" class="nav-item nav-link"><i class="fa fa-file-alt me-2"></i>Applications</a>
+                    <a href="companies.php" class="nav-item nav-link"><i class="fa fa-building me-2"></i>Companies</a>
+                    <a href="../logout.php" class="nav-item nav-link"><i class="fa fa-sign-out-alt me-2"></i>Logout</a>
+                </div>
+            </nav>
+        </div>
+        <!-- Sidebar End -->
+
+        <!-- Content Start -->
+        <div class="content">
+            <!-- Navbar Start -->
+            <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
+                <a href="index.php" class="navbar-brand d-flex d-lg-none me-4">
+                    <h2 class="text-primary mb-0"><i class="fa fa-user-edit"></i></h2>
+                </a>
+                <a href="#" class="sidebar-toggler flex-shrink-0">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <div class="navbar-nav align-items-center ms-auto">
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                            <span class="d-none d-lg-inline-flex">Admin</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">Settings</a>
+                            <a href="../logout.php" class="dropdown-item">Log Out</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <!-- Navbar End -->
+
+            <!-- Job Details Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-md-9">
+                        <div class="bg-secondary rounded h-100 p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h3 class="mb-0"><b><i><?php echo $row['jobtitle']; ?></i></b></h3>
+                                <a href="active-jobs.php" class="btn btn-primary"><i class="fas fa-arrow-circle-left me-2"></i>Back</a>
+                            </div>
+                            <hr>
+                            <div class="mb-3">
+                                <p>
+                                    <span class="me-3"><i class="fas fa-map-marker-alt text-primary me-1"></i><?php echo $row['city']; ?></span>
+                                    <span><i class="fas fa-calendar text-primary me-1"></i><?php echo date("d-M-Y", strtotime($row['createdat'])); ?></span>
+                                </p>              
+                            </div>
+                            <div class="job-description">
+                                <?php echo stripcslashes($row['description']); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="bg-secondary rounded h-100 p-4 text-center">
+                            <img src="../uploads/logo/<?php echo $row['logo']; ?>" alt="company logo" class="img-fluid mb-3" style="max-height: 150px;">
+                            <h4 class="mb-0"><?php echo $row['companyname']; ?></h4>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Job Details End -->
+
+            <!-- Footer Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-secondary rounded-top p-4 mt-3">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 text-center text-sm-start">
+                            &copy; <a href="#">Job Portal</a>, All Rights Reserved. 
+                        </div>
+                        <div class="col-12 col-sm-6 text-center text-sm-end">
+                            Designed By <a href="#">Your Company</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer End -->
+        </div>
+        <!-- Content End -->
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
-  </footer>
 
-  <!-- /.control-sidebar -->
-  <!-- Add the sidebar's background. This div must be placed
-       immediately after the control sidebar -->
-  <div class="control-sidebar-bg"></div>
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/chart/chart.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/tempusdominus/js/moment.min.js"></script>
+    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-</div>
-<!-- ./wrapper -->
-
-<!-- jQuery 3 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../js/adminlte.min.js"></script>
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
 </body>
 </html>
