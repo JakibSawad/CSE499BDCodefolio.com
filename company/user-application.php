@@ -169,7 +169,7 @@ if($result->num_rows == 0)
                             © <a href="#">Job Portal</a>, All Rights Reserved.
                         </div>
                         <div class="col-12 col-sm-6 text-center text-sm-end">
-                            Designed By <a href="#">Your Company</a>
+                            Designed By <a href="#">Team Heisenberg</a>
                         </div>
                     </div>
                 </div>
