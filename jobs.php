@@ -254,22 +254,16 @@ require_once("db.php");
   });
 
   function Search(val, filter) {
-  $("#pagination").twbsPagination({
-    totalPages: <?php echo $total_pages; ?>,
-    visible: 5,
-    onPageClick: function (e, page) {
-      e.preventDefault();
-      val = encodeURIComponent(val);
-      $("#target-content").html("loading....");
-      $("#target-content").load("search.php?page="+page+"&search="+val+"&filter="+filter);
-    }
-  });
-  
-  // Also load first page of search results immediately
-  val = encodeURIComponent(val);
-  $("#target-content").html("loading....");
-  $("#target-content").load("search.php?page=1&search="+val+"&filter="+filter);
-}
+    $("#pagination").twbsPagination({
+      totalPages: <?php echo $total_pages; ?>,
+      visible: 5,
+      onPageClick: function (e, page) {
+        e.preventDefault();
+        val = encodeURIComponent(val);
+        $("#target-content").html("loading....");
+        $("#target-content").load("search.php?page="+page+"&search="+val+"&filter="+filter);
+      }
+    });
   }
   </script>
 </body>
