@@ -264,11 +264,6 @@ require_once("db.php");
         $("#target-content").load("search.php?page="+page+"&search="+val+"&filter="+filter);
       }
     });
-
-    // Also load first page of search results immediately
-  val = encodeURIComponent(val);
-  $("#target-content").html("loading....");
-  $("#target-content").load("search.php?page=1&search="+val+"&filter="+filter);
   }
   </script>
 </body>
