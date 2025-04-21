@@ -68,7 +68,7 @@ require_once("../db.php");
                 <div class="navbar-nav w-100">
                     <a href="index.php" class="nav-item nav-link active"><i class="fa fa-address-card me-2"></i>My Applications</a>
                     <a href="edit-profile.php" class="nav-item nav-link"><i class="fa fa-user me-2"></i>Edit Profile</a>
-                    <a href="jobs.php" class="nav-item nav-link"><i class="fa fa-list-ul me-2"></i>Jobs</a>
+                    <a href="../jobs.php" class="nav-item nav-link"><i class="fa fa-list-ul me-2"></i>Jobs</a>
                     <a href="mailbox.php" class="nav-item nav-link"><i class="fa fa-envelope me-2"></i>Mailbox</a>
                     <a href="settings.php" class="nav-item nav-link"><i class="fa fa-cog me-2"></i>Settings</a>
                     <a href="../logout.php" class="nav-item nav-link"><i class="fa fa-sign-out-alt me-2"></i>Logout</a>
