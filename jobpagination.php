@@ -29,7 +29,7 @@ if($result->num_rows > 0) {
 		    <img class="attachment-img" src="uploads/logo/<?php echo $row1['logo']; ?>" alt="Attachment Image" style="max-width: 100px; max-height: 100px; object-fit: cover; margin-right: 10px;">
 		    <div class="attachment-pushed" style="flex-grow: 1;">
 		        <h4 class="attachment-heading" style="margin: 0 0 5px 0;">
-		            <a href="user/view-job-post.php?id=<?php echo $row['id_jobpost']; ?>" style="color: #4A90E2; text-decoration: none;"><?php echo $row['jobtitle']; ?></a> 
+		            <a href="view-job-post.php?id=<?php echo $row['id_jobpost']; ?>" style="color: #4A90E2; text-decoration: none;"><?php echo $row['jobtitle']; ?></a> 
 		            <span class="attachment-heading pull-right" style="float: right; color: #B0B0B0;">$<?php echo $row['maximumsalary']; ?>/Month</span>
 		        </h4>
 		        <div class="attachment-text" style="color: #B0B0B0;">
