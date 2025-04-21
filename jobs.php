@@ -199,72 +199,83 @@ require_once("db.php");
 
   <script>
   function Pagination() {
-    $("#pagination").twbsPagination({
-      totalPages: <?php echo $total_pages; ?>,
-      visible: 5,
-      onPageClick: function (e, page) {
-        e.preventDefault();
-        $("#target-content").html("loading....");
-        $("#target-content").load("jobpagination.php?page="+page);
-      }
-    });
-  }
+  $("#pagination").twbsPagination({
+    totalPages: <?php echo $total_pages; ?>,
+    visible: 5,
+    onPageClick: function (e, page) {
+      e.preventDefault();
+      $("#target-content").html("loading....");
+      $("#target-content").load("jobpagination.php?page="+page);
+    }
+  });
+}
 
-  $(function () {
+$(function () {
+  // Load first page of jobs immediately on page load
+  $("#target-content").html("loading....");
+  $("#target-content").load("jobpagination.php?page=1");
+  
+  // Initialize pagination after content is loaded
+  Pagination();
+});
+
+$("#searchBtn").on("click", function(e) {
+  e.preventDefault();
+  var searchResult = $("#searchBar").val();
+  var filter = "searchBar";
+  if(searchResult != "") {
+    $("#pagination").twbsPagination('destroy');
+    Search(searchResult, filter);
+  } else {
+    $("#pagination").twbsPagination('destroy');
     Pagination();
-  });
-
-  $("#searchBtn").on("click", function(e) {
-    e.preventDefault();
-    var searchResult = $("#searchBar").val();
-    var filter = "searchBar";
-    if(searchResult != "") {
-      $("#pagination").twbsPagination('destroy');
-      Search(searchResult, filter);
-    } else {
-      $("#pagination").twbsPagination('destroy');
-      Pagination();
-    }
-  });
-
-  $(".experienceSearch").on("click", function(e) {
-    e.preventDefault();
-    var searchResult = $(this).data("target");
-    var filter = "experience";
-    if(searchResult != "") {
-      $("#pagination").twbsPagination('destroy');
-      Search(searchResult, filter);
-    } else {
-      $("#pagination").twbsPagination('destroy');
-      Pagination();
-    }
-  });
-
-  $(".citySearch").on("click", function(e) {
-    e.preventDefault();
-    var searchResult = $(this).data("target");
-    var filter = "city";
-    if(searchResult != "") {
-      $("#pagination").twbsPagination('destroy');
-      Search(searchResult, filter);
-    } else {
-      $("#pagination").twbsPagination('destroy');
-      Pagination();
-    }
-  });
-
-  function Search(val, filter) {
-    $("#pagination").twbsPagination({
-      totalPages: <?php echo $total_pages; ?>,
-      visible: 5,
-      onPageClick: function (e, page) {
-        e.preventDefault();
-        val = encodeURIComponent(val);
-        $("#target-content").html("loading....");
-        $("#target-content").load("search.php?page="+page+"&search="+val+"&filter="+filter);
-      }
-    });
   }
+});
+
+$(".experienceSearch").on("click", function(e) {
+  e.preventDefault();
+  var searchResult = $(this).data("target");
+  var filter = "experience";
+  if(searchResult != "") {
+    $("#pagination").twbsPagination('destroy');
+    Search(searchResult, filter);
+  } else {
+    $("#pagination").twbsPagination('destroy');
+    Pagination();
+  }
+});
+
+$(".citySearch").on("click", function(e) {
+  e.preventDefault();
+  var searchResult = $(this).data("target");
+  var filter = "city";
+  if(searchResult != "") {
+    $("#pagination").twbsPagination('destroy');
+    Search(searchResult, filter);
+  } else {
+    $("#pagination").twbsPagination('destroy');
+    Pagination();
+  }
+});
+
+function Search(val, filter) {
+  // Load first page of search results immediately
+  val = encodeURIComponent(val);
+  $("#target-content").html("loading....");
+  $("#target-content").load("search.php?page=1&search="+val+"&filter="+filter);
+  
+  // Initialize pagination for search results
+  $("#pagination").twbsPagination({
+    totalPages: <?php echo $total_pages; ?>,
+    visible: 5,
+    onPageClick: function (e, page) {
+      e.preventDefault();
+      val = encodeURIComponent(val);
+      $("#target-content").html("loading....");
+      $("#target-content").load("search.php?page="+page+"&search="+val+"&filter="+filter);
+    }
+  });
+}
   </script>
 </body>
 </html>
