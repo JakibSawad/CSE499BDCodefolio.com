@@ -1,49 +1,88 @@
 <?php
-//To Handle Session Variables on This Page
+// To Handle Session Variables on This Page
 session_start();
 
-//If user Not logged in then redirect them back to homepage. 
-if(empty($_SESSION['id_user'])) {
-  header("Location: ../index.php");
-  exit();
-}
-
-require_once("../db.php");
+// Including Database Connection From db.php file
+require_once("db.php"); // Assumes db.php is in the same directory
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
-    <title>Job Portal - Browse Jobs</title>
+    <title>Job Portal - Available Jobs</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="img/favicon.ico" rel="icon"> <!-- Adjust path if needed -->
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet"> 
-    
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
+
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <link href="user/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet"> <!-- Use user/ or adjust path -->
+    <link href="user/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" /> <!-- Use user/ or adjust path -->
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="user/css/bootstrap.min.css" rel="stylesheet"> <!-- Use user/ or adjust path -->
 
     <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="user/css/style.css" rel="stylesheet"> <!-- Use user/ or adjust path -->
 
     <!-- DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <style>
+        /* Optional: Style adjustments for DataTables */
+        .dataTables_wrapper .dataTables_length,
+        .dataTables_wrapper .dataTables_filter,
+        .dataTables_wrapper .dataTables_info,
+        .dataTables_wrapper .dataTables_paginate {
+            color: #adb5bd; /* Lighter text for better contrast on dark background */
+        }
+        .dataTables_wrapper .dataTables_length select {
+            background-color: #6c757d; /* Darker background for select */
+            color: white;
+        }
+        .dataTables_wrapper .dataTables_filter input {
+            background-color: #6c757d; /* Darker background for search */
+            color: white;
+            border: 1px solid #888;
+        }
+         .page-item.disabled .page-link {
+            background-color: #6c757d;
+            border-color: #888;
+            color: #aaa;
+         }
+         .page-item.active .page-link {
+             background-color: #007bff; /* Primary color */
+             border-color: #007bff;
+         }
+         .page-link {
+            background-color: #6c757d;
+            border-color: #888;
+            color: white;
+         }
+         .page-link:hover {
+            background-color: #5a6268;
+            color: white;
+         }
+         /* Ensure table content is readable */
+         #jobsTable tbody td {
+            color: #fff; /* White text for table data */
+         }
+         #jobsTable thead th {
+             color: #fff; /* White text for table headers */
+         }
+
+    </style>
 </head>
 
 <body>
@@ -56,15 +95,17 @@ require_once("../db.php");
         </div>
         <!-- Spinner End -->
 
+        <?php if(isset($_SESSION['id_user'])) { ?>
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-secondary navbar-dark">
                 <a href="index.php" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>Job Portal</h3>
+                    <h3 class="text-primary"><i class="fa fa-user-tie me-2"></i>Job Portal</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
-                        <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                        <!-- You might want to add logic to display a user-specific profile picture -->
+                        <img class="rounded-circle" src="user/img/user.jpg" alt="" style="width: 40px; height: 40px;">
                         <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                     </div>
                     <div class="ms-3">
@@ -73,118 +114,71 @@ require_once("../db.php");
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="index.php" class="nav-item nav-link"><i class="fa fa-address-card me-2"></i>My Applications</a>
-                    <a href="edit-profile.php" class="nav-item nav-link"><i class="fa fa-user me-2"></i>Edit Profile</a>
-                    <a href="jobs.php" class="nav-item nav-link active"><i class="fa fa-list-ul me-2"></i>Jobs</a>
-                    <a href="mailbox.php" class="nav-item nav-link"><i class="fa fa-envelope me-2"></i>Mailbox</a>
-                    <a href="settings.php" class="nav-item nav-link"><i class="fa fa-cog me-2"></i>Settings</a>
-                    <a href="../logout.php" class="nav-item nav-link"><i class="fa fa-sign-out-alt me-2"></i>Logout</a>
+                    <!-- User Specific Links -->
+                    <a href="user/index.php" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="user/edit-profile.php" class="nav-item nav-link"><i class="fa fa-user me-2"></i>Edit Profile</a>
+                    <a href="jobs.php" class="nav-item nav-link active"><i class="fa fa-list-ul me-2"></i>Jobs</a> <!-- Active Link -->
+                    <a href="user/my-applications.php" class="nav-item nav-link"><i class="fa fa-briefcase me-2"></i>My Applications</a>
+                    <a href="user/mailbox.php" class="nav-item nav-link"><i class="fa fa-envelope me-2"></i>Mailbox</a>
+                    <a href="user/settings.php" class="nav-item nav-link"><i class="fa fa-cog me-2"></i>Settings</a>
+                    <a href="logout.php" class="nav-item nav-link"><i class="fa fa-sign-out-alt me-2"></i>Logout</a>
                 </div>
             </nav>
         </div>
         <!-- Sidebar End -->
+        <?php } else { ?>
+         <!-- Optional: Placeholder or alternative sidebar/navbar for non-logged-in users viewing jobs -->
+         <!-- Or just have the content area take full width -->
+         <style> .content { margin-left: 0 !important; } </style>
+        <?php } ?>
 
         <!-- Content Start -->
-        <div class="content">
+        <div class="content <?php echo isset($_SESSION['id_user']) ? '' : 'w-100'; ?>"> <!-- Adjust class if no sidebar -->
             <!-- Navbar Start -->
             <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
                 <a href="index.php" class="navbar-brand d-flex d-lg-none me-4">
-                    <h2 class="text-primary mb-0"><i class="fa fa-user-edit"></i></h2>
+                    <h2 class="text-primary mb-0"><i class="fa fa-user-tie"></i></h2>
                 </a>
-                <a href="#" class="sidebar-toggler flex-shrink-0">
+                 <?php if(isset($_SESSION['id_user'])) { ?>
+                 <a href="#" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars"></i>
                 </a>
-                <form class="d-none d-md-flex ms-4">
-                    <input class="form-control bg-dark border-0" type="search" placeholder="Search">
-                </form>
+                 <?php } ?>
+                <!-- Optional Search Bar in Navbar -->
+                <!-- <form class="d-none d-md-flex ms-4">
+                    <input class="form-control bg-dark border-0" type="search" placeholder="Search Jobs">
+                </form> -->
                 <div class="navbar-nav align-items-center ms-auto">
+                    <?php if(isset($_SESSION['id_user'])) { ?>
+                    <!-- Logged In User Navbar Items -->
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <i class="fa fa-envelope me-lg-2"></i>
-                            <span class="d-none d-lg-inline-flex">Messages</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                            <!-- Add message items here -->
-                        </div>
-                    </div>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                             <!-- User profile image -->
+                             <img class="rounded-circle me-lg-2" src="user/img/user.jpg" alt="" style="width: 40px; height: 40px;">
                             <span class="d-none d-lg-inline-flex"><?php echo $_SESSION['name']; ?></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                            <a href="edit-profile.php" class="dropdown-item">My Profile</a>
-                            <a href="settings.php" class="dropdown-item">Settings</a>
-                            <a href="../logout.php" class="dropdown-item">Log Out</a>
+                            <a href="user/edit-profile.php" class="dropdown-item">My Profile</a>
+                            <a href="user/settings.php" class="dropdown-item">Settings</a>
+                            <a href="logout.php" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
+                    <?php } else { ?>
+                    <!-- Links for Non-Logged In Users -->
+                    <a href="login.php" class="nav-item nav-link">Login</a>
+                    <a href="sign-up.php" class="nav-item nav-link">Sign Up</a>
+                    <?php } ?>
                 </div>
             </nav>
             <!-- Navbar End -->
-
-            <!-- Search Filters Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="bg-secondary rounded p-4">
-                    <h3 class="mb-4">Find Jobs</h3>
-                    <form method="GET" action="jobs.php">
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-4">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control bg-dark border-0" id="keywords" name="keywords" placeholder="Keywords">
-                                    <label for="keywords">Keywords</label>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-floating">
-                                    <select class="form-select bg-dark border-0" id="category" name="category">
-                                        <option value="" selected>All Categories</option>
-                                        <?php
-                                        $sql = "SELECT DISTINCT(category) FROM job_post";
-                                        $result = $conn->query($sql);
-                                        if($result->num_rows > 0) {
-                                            while($row = $result->fetch_assoc()) {
-                                                echo '<option value="'.$row['category'].'">'.$row['category'].'</option>';
-                                            }
-                                        }
-                                        ?>
-                                    </select>
-                                    <label for="category">Category</label>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-floating">
-                                    <select class="form-select bg-dark border-0" id="location" name="location">
-                                        <option value="" selected>Any Location</option>
-                                        <?php
-                                        $sql = "SELECT DISTINCT(location) FROM job_post";
-                                        $result = $conn->query($sql);
-                                        if($result->num_rows > 0) {
-                                            while($row = $result->fetch_assoc()) {
-                                                echo '<option value="'.$row['location'].'">'.$row['location'].'</option>';
-                                            }
-                                        }
-                                        ?>
-                                    </select>
-                                    <label for="location">Location</label>
-                                </div>
-                            </div>
-                            <div class="col-12 text-center">
-                                <button class="btn btn-primary py-2 px-4" type="submit">Search Jobs</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <!-- Search Filters End -->
 
             <!-- Job Listings Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-secondary rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="mb-0">Available Jobs</h6>
+                        <h3 class="mb-0 text-primary">Available Job Postings</h3>
+                        <!-- Maybe add filter/sort options here later -->
                     </div>
-                    <p>Browse through the latest job opportunities below and apply to positions that match your skills and experience.</p>
-                    
                     <div class="table-responsive">
                         <table class="table text-start align-middle table-bordered table-hover mb-0" id="jobsTable">
                             <thead>
@@ -192,70 +186,49 @@ require_once("../db.php");
                                     <th scope="col">Job Title</th>
                                     <th scope="col">Company</th>
                                     <th scope="col">Location</th>
-                                    <th scope="col">Category</th>
-                                    <th scope="col">Posted Date</th>
+                                    <th scope="col">Min Salary</th>
+                                    <th scope="col">Max Salary</th>
+                                    <th scope="col">Experience</th>
+                                    <th scope="col">Posted On</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                // Prepare SQL query based on search filters
-                                $sql = "SELECT job_post.*, company.companyname FROM job_post 
-                                        INNER JOIN company ON job_post.id_company = company.id_company WHERE 1";
-                                
-                                // Apply filters if provided
-                                if(isset($_GET['keywords']) && !empty($_GET['keywords'])) {
-                                    $keywords = $conn->real_escape_string($_GET['keywords']);
-                                    $sql .= " AND (job_post.jobtitle LIKE '%$keywords%' 
-                                              OR job_post.description LIKE '%$keywords%' 
-                                              OR job_post.responsibility LIKE '%$keywords%')";
-                                }
-                                
-                                if(isset($_GET['category']) && !empty($_GET['category'])) {
-                                    $category = $conn->real_escape_string($_GET['category']);
-                                    $sql .= " AND job_post.category = '$category'";
-                                }
-                                
-                                if(isset($_GET['location']) && !empty($_GET['location'])) {
-                                    $location = $conn->real_escape_string($_GET['location']);
-                                    $sql .= " AND job_post.location = '$location'";
-                                }
-                                
-                                // Order by most recent
-                                $sql .= " ORDER BY job_post.createdat DESC";
-                                
+                                // SQL Query to fetch job posts and company names
+                                // Fetch jobs that are ideally marked as 'active' if you have such a status column
+                                // Example: SELECT job_post.*, company.companyname FROM job_post INNER JOIN company ON job_post.id_company = company.id_company WHERE job_post.active=1 ORDER BY job_post.createdat DESC
+                                $sql = "SELECT job_post.*, company.companyname
+                                        FROM job_post
+                                        INNER JOIN company ON job_post.id_company = company.id_company
+                                        ORDER BY job_post.createdat DESC"; // Order by most recent
                                 $result = $conn->query($sql);
 
-                                if($result->num_rows > 0) {
-                                    while($row = $result->fetch_assoc()) {
-                                        // Check if user has already applied
-                                        $applied = false;
-                                        $applied_query = "SELECT * FROM apply_job_post WHERE id_user='$_SESSION[id_user]' AND id_jobpost='$row[id_jobpost]'";
-                                        $applied_result = $conn->query($applied_query);
-                                        if($applied_result->num_rows > 0) {
-                                            $applied = true;
-                                        }
+                                if ($result === false) {
+                                    // Output error information
+                                    echo "Error executing query: " . $conn->error;
+                                } elseif ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
                                 ?>
-                                <tr>
-                                    <td><?php echo $row['jobtitle']; ?></td>
-                                    <td><?php echo $row['companyname']; ?></td>
-                                    <td><?php echo $row['location']; ?></td>
-                                    <td><?php echo $row['category']; ?></td>
-                                    <td><?php echo date("M d, Y", strtotime($row['createdat'])); ?></td>
-                                    <td>
-                                        <a class="btn btn-sm btn-primary" href="view-job.php?id=<?php echo $row['id_jobpost']; ?>">View</a>
-                                        <?php if(!$applied) { ?>
-                                        <a class="btn btn-sm btn-success" href="apply-job.php?id=<?php echo $row['id_jobpost']; ?>">Apply</a>
-                                        <?php } else { ?>
-                                        <button class="btn btn-sm btn-secondary" disabled>Applied</button>
-                                        <?php } ?>
-                                    </td>
-                                </tr>
+                                        <tr>
+                                            <td><?php echo htmlspecialchars($row['jobtitle']); ?></td>
+                                            <td><?php echo htmlspecialchars($row['companyname']); ?></td>
+                                            <td><?php echo htmlspecialchars($row['joblocation']); ?></td>
+                                            <td><?php echo htmlspecialchars($row['minimumsalary']); ?></td>
+                                            <td><?php echo htmlspecialchars($row['maximumsalary']); ?></td>
+                                            <td><?php echo htmlspecialchars($row['experience']); ?> Years</td>
+                                            <td><?php echo date("d-M-Y", strtotime($row['createdat'])); ?></td>
+                                            <td>
+                                                <!-- Link to a page showing job details (create this page) -->
+                                                <a href="view-job-post.php?id=<?php echo $row['id_jobpost']; ?>" class="btn btn-sm btn-primary">View</a>
+                                            </td>
+                                        </tr>
                                 <?php
                                     }
                                 } else {
-                                    echo '<tr><td colspan="6" class="text-center">No jobs found matching your criteria</td></tr>';
+                                    echo '<tr><td colspan="8" class="text-center text-white">No job postings found.</td></tr>';
                                 }
+                                $conn->close(); // Close connection
                                 ?>
                             </tbody>
                         </table>
@@ -269,10 +242,11 @@ require_once("../db.php");
                 <div class="bg-secondary rounded-top p-4">
                     <div class="row">
                         <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; <a href="#">Job Portal</a>, All Rights Reserved. 
+                            © <a href="#">Job Portal</a>, All Rights Reserved.
                         </div>
                         <div class="col-12 col-sm-6 text-center text-sm-end">
-                            Designed By <a href="#">Your Company</a>
+                             Designed By <a href="#">Team Heisenberg</a><br>
+                             Distributed By <a href="#">NSU CSE</a>
                         </div>
                     </div>
                 </div>
@@ -286,31 +260,36 @@ require_once("../db.php");
     </div>
 
     <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Ensure jQuery is loaded first -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/chart/chart.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/tempusdominus/js/moment.min.js"></script>
-    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="user/lib/chart/chart.min.js"></script> <!-- Adjust path -->
+    <script src="user/lib/easing/easing.min.js"></script> <!-- Adjust path -->
+    <script src="user/lib/waypoints/waypoints.min.js"></script> <!-- Adjust path -->
+    <script src="user/lib/owlcarousel/owl.carousel.min.js"></script> <!-- Adjust path -->
+    <script src="user/lib/tempusdominus/js/moment.min.js"></script> <!-- Adjust path -->
+    <script src="user/lib/tempusdominus/js/moment-timezone.min.js"></script> <!-- Adjust path -->
+    <script src="user/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script> <!-- Adjust path -->
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    <script src="user/js/main.js"></script> <!-- Adjust path -->
 
+    <!-- Initialize DataTables -->
     <script>
-    $(function () {
-        $('#jobsTable').DataTable({
-          'paging'      : true,
-          'lengthChange': false,
-          'searching'   : true,
-          'ordering'    : true,
-          'info'        : true,
-          'autoWidth'   : false
+        $(document).ready(function() {
+            $('#jobsTable').DataTable({
+                "paging": true,         // Enable pagination
+                "lengthChange": true,   // Allow user to change number of rows shown
+                "searching": true,      // Enable search box
+                "ordering": true,       // Enable column sorting
+                "info": true,           // Show 'Showing x to y of z entries'
+                "autoWidth": false,     // Disable auto-width calculation
+                "responsive": true      // Enable responsive design features (optional, might need responsive extension)
+                // Add language options if needed for pagination/search text
+            });
         });
-    });
     </script>
 </body>
 
