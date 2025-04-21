@@ -268,5 +268,3 @@ require_once("db.php");
   </script>
 </body>
 </html>
-
-
